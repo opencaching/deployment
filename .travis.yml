@@ -1,0 +1,13 @@
+language: go
+sudo: reuired
+install: true
+
+go:
+  - 1.9
+
+script:
+  - go get -u github.com/vbatts/git-validation
+  - git-validation -q -run DCO,short-subject -range 4442b62bc377a72c94069e13fe63d33b3f372a0c..HEAD
+
+services:
+  - docker
