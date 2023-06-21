@@ -1,9 +1,0 @@
-language: generic
-sudo: required
-install: true
-
-script:
-  - ./tests/image_build_verification.sh
-
-services:
-  - docker
