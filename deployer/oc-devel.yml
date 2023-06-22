@@ -1,0 +1,10 @@
+---
+
+- name: Opencaching Local Devel provisioner
+  hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+    - name: Run apt related tasks
+      become: true
+      import_tasks: tasks/apt.yml

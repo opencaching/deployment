@@ -1,0 +1,57 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  refresh-installer:
+      update: yes
+  keyboard:
+      layout: us
+  network:
+      network:
+          version: 2
+          ethernets:
+              enp0s3:
+                 dhcp4: yes
+              eth0:
+                 dhcp4: yes
+  apt:
+      primary:
+          - arches: [default]
+            uri: http://archive.ubuntu.com/ubuntu/
+  identity:
+      hostname: ocpl-devel
+      username: root
+      password: "$6$rounds=4096$xTl9kWF87sN$ne.kQrOe9h9PPpwKapdDkO9nvRyINaM5xQnW7.BPO6MLngEZnz3Ikq159etQIlRrewiPXRfJylVsZrn5E65Ep."
+  ssh:
+      install-server: yes
+      allow-pw: yes
+  user-data:
+      disable_root: true
+      users:
+        - name: user
+          shell: /bin/bash
+          lock-passwd: false
+          passwd: "$6$rounds=4096$xTl9kWF87sN$ne.kQrOe9h9PPpwKapdDkO9nvRyINaM5xQnW7.BPO6MLngEZnz3Ikq159etQIlRrewiPXRfJylVsZrn5E65Ep."
+  packages:
+      - ca-certificates
+      - cloud-guest-utils
+      - cloud-init
+      - curl
+      - iproute2
+      - openssh-server
+      - perl
+      - python3
+      - python3-pip
+      - ansible
+      - sudo
+  late-commands:
+      - |
+        curtin in-target --target=/target -- /bin/bash -c ' \
+            apt-get -y purge snapd; \
+            systemctl disable apt-daily.service; \
+            systemctl disable apt-daily.timer; \
+            systemctl disable apt-daily-upgrade.service; \
+            systemctl disable apt-daily-upgrade.timer; \
+            exit 0 \
+        '
+      - echo 'user ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/user
