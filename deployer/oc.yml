@@ -1,0 +1,12 @@
+---
+
+- name: Opencaching production node provisioner
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Run apt related tasks
+      become: true
+      import_tasks: tasks/apt.yml
+
+# this will be implemented some day...
