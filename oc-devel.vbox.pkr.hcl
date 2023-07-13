@@ -21,7 +21,7 @@ source "virtualbox-iso" "oc_devel" {
                             "boot<enter>"]
   boot_wait              = "1s"
   cpus                   = 2
-  disk_size              = 65536
+  disk_size              = 51200
   guest_os_type          = "Ubuntu_64"
   headless               = false
   http_directory         = "./autoinstall/http"
