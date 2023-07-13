@@ -56,13 +56,9 @@
   ],
   "provisioners": [
     {
-      "type": "file",
-      "source": "./deployer",
-      "destination": "/tmp/bla"
-    },
-    {
       "playbook_dir": "./deployer",
-      "playbook_file": "./deployer/oc-devel.yml",
+      "playbook_file": "./deployer/oc.yml",
+      "inventory_file": "./deployer/inventory/local.inventory",
       "type": "ansible-local"
     }
   ],
