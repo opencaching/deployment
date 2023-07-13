@@ -50,9 +50,19 @@ build {
     playbook_file  = "./deployer/oc.yml"
   }
 
-  post-processor "vagrant" {
-    keep_input_artifact = true
-    compression_level   = 9
-    provider_override   = "virtualbox"
+  post-processors {
+    post-processor "artifice" {
+      files               = ["output-oc_devel/oc_devel-disk001.vmdk"]
+    }
+    post-processor "shell-local" {
+      inline = ["VBoxManage clonehd output-oc_devel/oc_devel-disk001.vmdk output-oc_devel/oc-devel-disk.vhd --format vhd"]
+    }
+    post-processor "artifice" {
+      files               = ["output-oc_devel/oc-devel-disk.vhd"]
+    }
+    post-processor "compress" {
+      output            = "oc-devel.vhd.tar.gz"
+      compression_level =  9
+    }
   }
 }
