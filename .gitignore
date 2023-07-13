@@ -1,5 +1,5 @@
 .idea
 .venv
 
-output-virtualbox-iso/
-*.box
+output-oc_devel/
+*.tar.gz
