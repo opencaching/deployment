@@ -7,7 +7,7 @@ Requirements:
 
 Invoke command:
 ```
-packer build oc-devel.vbox.json
+packer build oc-devel.vbox.pkr.hcl
 ```
 
 ### Deploying opencaching node on existing Ubuntu instance
