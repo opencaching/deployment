@@ -38,6 +38,8 @@ autoinstall:
       network:
           version: 2
           ethernets:
+              enp0s8:
+                 dhcp4: yes
               enp0s3:
                  dhcp4: yes
               eth0:

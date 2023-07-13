@@ -20,7 +20,7 @@ source "virtualbox-iso" "oc_devel" {
                             "initrd /casper/initrd<enter><wait>",
                             "boot<enter>"]
   boot_wait              = "1s"
-  cpus                   = 2
+  cpus                   = 4
   disk_size              = 51200
   guest_os_type          = "Ubuntu_64"
   headless               = false
