@@ -2,8 +2,8 @@
 
 - name: Update and upgrade apt packages
   apt:
-    upgrade: true
-    update_cache: true
+    upgrade: "full"
+    update_cache: yes
 
 - name: apt install the required packages
   apt:
@@ -15,5 +15,5 @@
 
 - name: Remove useless packages from the cache
   apt:
-    autoclean: true
-    autoremove: true
+    autoclean: yes
+    autoremove: yes
