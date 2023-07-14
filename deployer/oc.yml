@@ -4,6 +4,6 @@
   gather_facts: true
 
   tasks:
-    - name: Run apt related tasks
+    - name: Install required packages
       become: true
       import_tasks: tasks/apt.yml
