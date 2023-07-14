@@ -1,0 +1,36 @@
+---
+- name: Copy apache configuration for opencaching site
+  copy:
+    src: files/webserver/000-default.conf
+    dest: /etc/apache2/sites-enabled/000-default.conf
+
+- name: Copy apache configuration for opencaching site
+  copy:
+    src: files/webserver/mobile.conf
+    dest: /etc/apache2/sites-enabled/mobile.conf
+
+- name: Clone opencaching repo master branch
+  git:
+    repo: https://github.com/opencaching/opencaching-pl.git
+    dest: /srv/ocpl
+
+- name: Adjust ownership for /srv/ocpl
+  file:
+    path: /srv/ocpl
+    owner: user
+    group: www-data
+    recurse: yes
+
+- name: Adjust ownership for apache logs directory
+  file:
+    path: /var/log/apache2
+    owner: user
+    recurse: yes
+
+- name: Enable rewrite module
+  apache2_module:
+    name: rewrite
+    state: present
+
+- name: Restart apache2
+  command: systemctl restart apache2
