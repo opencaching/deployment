@@ -1,7 +1,7 @@
 ---
 - name: Update and upgrade apt packages
   apt:
-    upgrade: "full"
+    upgrade: full
     update_cache: yes
 
 - name: Add ppa:ondrej/php repository
@@ -18,6 +18,9 @@
     - tmux
     - screen
     - vim
+    - git
+    # linux packages required by opencaching code
+    - sendmail
     # php related packages
     - php8.1
     - php-apcu
@@ -45,7 +48,7 @@
     - apache2
     - libapache2-mod-php8.1
     # database
-    - phpmyadmin # this will install multiple other dependencies and other version of php that is installed previously. Consider installing phpmyadmin manually.
+    - phpmyadmin # this will install multiple other dependencies and other version of php that is installed previously. (todo) Consider installing phpmyadmin manually.
     - mariadb-server
 
 - name: Remove useless packages from the cache

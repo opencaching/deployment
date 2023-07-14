@@ -7,3 +7,7 @@
     - name: Install required packages
       become: true
       import_tasks: tasks/apt.yml
+
+    - name: Configure opencaching webserver
+      become: true
+      import_tasks: tasks/webserver.yml
