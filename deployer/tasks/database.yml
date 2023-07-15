@@ -1,0 +1,37 @@
+---
+- name: Is database root password set?
+  command: mysql -u root --execute "SELECT NOW()"
+  register: is_root_password_set
+  ignore_errors: yes
+
+- name: Delete anonymous users
+  mysql_user:
+    user=""
+    state="absent"
+  when: is_root_password_set.rc == 0
+
+- name: Set root password
+  mysql_user:
+    user=root
+    password="toor"
+    host=localhost
+  when: is_root_password_set.rc == 0
+
+- name: Opencaching database already exists?
+  command: mysql -u root -ptoor --execute "use ocpl;"
+  register: is_ocpl_db_existing
+  ignore_errors: yes
+
+- name: Copy OC devel database to /tmp
+  copy:
+    src: files/ocpl/ocpl_db_devel-2018.sql.gz
+    dest: /tmp/ocpl_db_devel-2018.sql.gz
+  when: is_ocpl_db_existing.rc != 0
+
+- name: Create ocpl database
+  command: mysql -u root -ptoor --execute "CREATE DATABASE ocpl;"
+  when: is_ocpl_db_existing.rc != 0
+
+- name: Import OC devel database
+  shell: pv /tmp/ocpl_db_devel-2018.sql.gz | gunzip | mysql -u root -ptoor ocpl
+  when: is_ocpl_db_existing.rc != 0

@@ -4,6 +4,10 @@
   gather_facts: true
 
   tasks:
+    - name: Node pre-configuration
+      become: true
+      import_tasks: tasks/preconfiguration.yml
+
     - name: Install required packages
       become: true
       import_tasks: tasks/apt.yml
@@ -11,3 +15,7 @@
     - name: Configure opencaching webserver
       become: true
       import_tasks: tasks/webserver.yml
+
+    - name: Apply devel database dump
+      become: true
+      import_tasks: tasks/database.yml

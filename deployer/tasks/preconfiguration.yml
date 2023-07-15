@@ -1,0 +1,10 @@
+---
+#todo: create from here custom user if needed
+
+- name: Copy /etc/hosts #this is required due to sendmail issue with resolving local hostname
+  copy:
+    src: files/etc/hosts
+    dest: /etc/hosts
+
+- name: Restart systemd-hostnamed
+  command: systemctl restart systemd-hostnamed

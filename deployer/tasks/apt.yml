@@ -50,6 +50,9 @@
     # database
     - phpmyadmin # this will install multiple other dependencies and other version of php that is installed previously. (todo) Consider installing phpmyadmin manually.
     - mariadb-server
+    # required for deployment
+    - python3-mysqldb
+    - pv
 
 - name: Remove useless packages from the cache
   apt:
