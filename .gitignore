@@ -3,3 +3,4 @@
 
 output-oc_devel/
 *.tar.gz
+*.sql.gz
