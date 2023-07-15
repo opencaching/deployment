@@ -35,3 +35,13 @@
 - name: Import OC devel database
   shell: pv /tmp/ocpl_db_devel-2018.sql.gz | gunzip | mysql -u root -ptoor ocpl
   when: is_ocpl_db_existing.rc != 0
+
+- name: Copy phpmyadmin config
+  command: ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+  ignore_errors: yes
+
+- name: Enable phpmyadmin config
+  command: a2enconf phpmyadmin
+
+- name: Reload apache2
+  command: systemctl reload apache2
