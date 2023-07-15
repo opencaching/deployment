@@ -25,6 +25,7 @@
   file:
     path: /var/log/apache2
     owner: user
+    group: adm
     recurse: yes
 
 - name: Enable rewrite module
