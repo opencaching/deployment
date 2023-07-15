@@ -1,4 +1,21 @@
 ---
+- name: Copy mardiadb custom settings
+  copy:
+    src: files/database/99-local.cnf
+    dest: /etc/mysql/mariadb.conf.d/99-local.cnf
+
+- name: Copy mardiadb custom settings
+  copy:
+    src: files/database/ocpl.cnf
+    dest: /etc/mysql/conf.d/ocpl.cnf
+
+- name: Restart mariadb
+  command: systemctl restart mariadb
+
+- name: Wait for maridb
+  pause:
+    seconds: 5
+
 - name: Is database root password set?
   command: mysql -u root --execute "SELECT NOW()"
   register: is_root_password_set
