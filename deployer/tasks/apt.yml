@@ -21,6 +21,7 @@
     - git
     # linux packages required by opencaching code
     - sendmail
+    - gpsbabel
     # php related packages
     - php8.1
     - php-apcu
