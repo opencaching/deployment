@@ -9,6 +9,13 @@
     src: files/webserver/mobile.conf
     dest: /etc/apache2/sites-enabled/mobile.conf
 
+- name: Adjust ownership for apache logs directory
+  file:
+    path: /var/log/apache2
+    owner: user
+    group: adm
+    recurse: yes
+
 - name: Clone opencaching repo master branch
   git:
     repo: https://github.com/opencaching/opencaching-pl.git
@@ -22,13 +29,6 @@
     path: /srv/ocpl
     owner: user
     group: www-data
-    recurse: yes
-
-- name: Adjust ownership for apache logs directory
-  file:
-    path: /var/log/apache2
-    owner: user
-    group: adm
     recurse: yes
 
 - name: Create /srv/ocpl-dynamic-files
@@ -46,6 +46,12 @@
     - /srv/ocpl-dynamic-files/tmp
     - /srv/ocpl-dynamic-files/tpl
     - /srv/ocpl-dynamic-files/wigo
+    - /srv/ocpl-dynamic-files/download/zip
+
+- name: Copy oc node configuration file
+  copy:
+    src: files/ocpl/settings.inc.php
+    dest: /srv/ocpl/lib/settings.inc.php
 
 - name: Enable rewrite module
   apache2_module:
