@@ -22,10 +22,10 @@
   register: is_ocpl_db_existing
   ignore_errors: yes
 
-- name: Copy OC devel database to /tmp
-  copy:
-    src: files/ocpl/ocpl_db_devel-2018.sql.gz
-    dest: /tmp/ocpl_db_devel-2018.sql.gz
+- name: Download OC devel database to /tmp/
+  get_url:
+    url: https://s3api.zylowski.net/public/ocpl_devel_dump-2018.sql.gz
+    dest: /tmp/oc_devel_db.sql.gz
   when: is_ocpl_db_existing.rc != 0
 
 - name: Create ocpl database
@@ -33,13 +33,13 @@
   when: is_ocpl_db_existing.rc != 0
 
 - name: Import OC devel database
-  shell: pv /tmp/ocpl_db_devel-2018.sql.gz | gunzip | mysql -u root -ptoor ocpl
+  shell: pv /tmp/oc_devel_db.sql.gz | gunzip | mysql -u root -ptoor ocpl
   when: is_ocpl_db_existing.rc != 0
 
-- name: Delete content & directory
+- name: Delete devel dump
   file:
     state: absent
-    path: /tmp/ocpl_db_devel-2018.sql.gz
+    path: /tmp/oc_devel_db.sql.gz
 
 - name: Copy phpmyadmin config
   command: ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
