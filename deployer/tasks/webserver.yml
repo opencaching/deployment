@@ -52,6 +52,8 @@
   copy:
     src: files/ocpl/settings.inc.php
     dest: /srv/ocpl/lib/settings.inc.php
+    owner: user
+    group: www-data
 
 - name: Enable rewrite module
   apache2_module:
