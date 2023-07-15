@@ -4,7 +4,7 @@
     src: files/webserver/000-default.conf
     dest: /etc/apache2/sites-enabled/000-default.conf
 
-- name: Copy apache configuration for opencaching site
+- name: Copy apache configuration for mobile opencaching site
   copy:
     src: files/webserver/mobile.conf
     dest: /etc/apache2/sites-enabled/mobile.conf
@@ -13,6 +13,9 @@
   git:
     repo: https://github.com/opencaching/opencaching-pl.git
     dest: /srv/ocpl
+
+- name: Prevent fatal errors during running php evel git commands in /srv/ocpl
+  command: git config --system --add safe.directory /srv/ocpl
 
 - name: Adjust ownership for /srv/ocpl
   file:
@@ -27,6 +30,22 @@
     owner: user
     group: adm
     recurse: yes
+
+- name: Create /srv/ocpl-dynamic-files
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: www-data
+    group: root
+  loop:
+    - /srv/ocpl-dynamic-files/images/mini-mapa
+    - /srv/ocpl-dynamic-files/images/statpics
+    - /srv/ocpl-dynamic-files/images/uploads
+    - /srv/ocpl-dynamic-files/mp3
+    - /srv/ocpl-dynamic-files/searchdata
+    - /srv/ocpl-dynamic-files/tmp
+    - /srv/ocpl-dynamic-files/tpl
+    - /srv/ocpl-dynamic-files/wigo
 
 - name: Enable rewrite module
   apache2_module:
